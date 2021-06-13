@@ -1,9 +1,20 @@
+import 'package:aol_connect/screens/audio/kriya_practice.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'package:firebase_core/firebase_core.dart'; // new
+import 'package:firebase_auth/firebase_auth.dart'; // new
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';           // new
+
+import 'screens/auth/authentication.dart';                  // new
+import 'screens/widgets.dart';
+import 'screens/homepage/home_page.dart';
+
+// void main() {
+//   runApp(MyApp());
+// }
 
 // class MyApp extends StatelessWidget {
 //   // This widget is the root of your application.
@@ -113,101 +124,130 @@ void main() {
 //   }
 // }
 
-class MyApp extends StatelessWidget {
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Startup Name Generator',
+//       home: RandomWords()
+//     );
+//   }
+// }
+// class RandomWords extends StatefulWidget {
+//   @override
+//   _RandomWordsState createState() => _RandomWordsState();
+// }
+//
+// class _RandomWordsState extends State<RandomWords> {
+//   final _suggestions = <WordPair>[];
+//   final _saved = <WordPair>{};     // NEW
+//   final _biggerFont = TextStyle(fontSize: 18.0);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Startup Name Generator'),
+//         actions: [
+//           IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
+//         ],
+//       ),
+//       body: _buildSuggestions(),
+//     );
+//   }
+//
+//   void _pushSaved() {
+//     Navigator.of(context).push(
+//         MaterialPageRoute<void>(
+//           // NEW lines from here...
+//           builder: (BuildContext context) {
+//             final tiles = _saved.map(
+//                   (WordPair pair) {
+//                 return ListTile(
+//                   title: Text(
+//                     pair.asPascalCase,
+//                     style: _biggerFont,
+//                   ),
+//                 );
+//               },
+//             );
+//             final divided = tiles.isNotEmpty
+//                 ? ListTile.divideTiles(context: context, tiles: tiles).toList()
+//                 : <Widget>[];
+//
+//             return Scaffold(
+//               appBar: AppBar(
+//                 title: Text('Saved Suggestions'),
+//               ),
+//               body: ListView(children: divided),
+//             );
+//           },
+//     ));
+//   }
+//
+//   Widget _buildSuggestions() {
+//     return ListView.builder(
+//         padding: EdgeInsets.all(16.0),
+//         itemBuilder: /*1*/ (context, i) {
+//           if (i.isOdd) return Divider(); /*2*/
+//
+//           final index = i ~/ 2; /*3*/
+//           if (index >= _suggestions.length) {
+//             _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+//           }
+//           return _buildRow(_suggestions[index]);
+//         });
+//   }
+//
+//   Widget _buildRow(WordPair pair) {
+//     final text = pair.asPascalCase;
+//     final alreadySaved = _saved.contains(pair);
+//     return ListTile(
+//       title: Text(
+//         'Chikki is $text',
+//         style: _biggerFont,
+//       ),
+//       trailing: Icon(   // NEW from here...
+//         alreadySaved ? Icons.favorite : Icons.favorite_border,
+//         color: alreadySaved ? Colors.red : null,
+//       ),
+//       onTap: () {      // NEW lines from here...
+//         setState(() {
+//           if (alreadySaved) {
+//             _saved.remove(pair);
+//           } else {
+//             _saved.add(pair);
+//           }
+//         });
+//       },
+//     );
+//   }
+// }
+
+
+void main() {
+  runApp(AOLConnect());
+}
+
+class AOLConnect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
-      home: RandomWords()
-    );
-  }
-}
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _saved = <WordPair>{};     // NEW
-  final _biggerFont = TextStyle(fontSize: 18.0);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Startup Name Generator'),
-        actions: [
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        ],
+      title: 'Art of Living Connect',
+      theme: ThemeData(
+        buttonTheme: Theme.of(context).buttonTheme.copyWith(
+          highlightColor: Colors.deepPurple
+        ),
+        primarySwatch: Colors.deepPurple,
+        textTheme: GoogleFonts.robotoTextTheme(
+          Theme.of(context).textTheme
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity
       ),
-      body: _buildSuggestions(),
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          // NEW lines from here...
-          builder: (BuildContext context) {
-            final tiles = _saved.map(
-                  (WordPair pair) {
-                return ListTile(
-                  title: Text(
-                    pair.asPascalCase,
-                    style: _biggerFont,
-                  ),
-                );
-              },
-            );
-            final divided = tiles.isNotEmpty
-                ? ListTile.divideTiles(context: context, tiles: tiles).toList()
-                : <Widget>[];
-
-            return Scaffold(
-              appBar: AppBar(
-                title: Text('Saved Suggestions'),
-              ),
-              body: ListView(children: divided),
-            );
-          },
-    ));
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  Widget _buildRow(WordPair pair) {
-    final text = pair.asPascalCase;
-    final alreadySaved = _saved.contains(pair);
-    return ListTile(
-      title: Text(
-        'Chikki is $text',
-        style: _biggerFont,
-      ),
-      trailing: Icon(   // NEW from here...
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {      // NEW lines from here...
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
+      home: HomePage()
+      // routes: {
+      //   HomePage.routeName: (_) => HomePage(),
+      //   // KriyaPractice.routeName: (_) => KriyaPractice()
+      // },
     );
   }
 }

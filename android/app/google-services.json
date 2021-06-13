@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "196208139279",
+    "project_id": "aolconnect",
+    "storage_bucket": "aolconnect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196208139279:android:5d60b65a92f7b14513977a",
+        "android_client_info": {
+          "package_name": "org.artofliving.aol_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196208139279-l2i4korss2r6ppcc7gs44ffefto9564u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvGF_tsOPluWpRzU5DdSB3ELzzvL3aYr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196208139279-l2i4korss2r6ppcc7gs44ffefto9564u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
